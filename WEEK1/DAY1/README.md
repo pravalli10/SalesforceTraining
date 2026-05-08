@@ -1,6 +1,7 @@
-1. What is CRM
-CRM (Customer Relationship Management) is a system used to manage customer information, communication, sales, and support in one place.
-CRM helps businesses:
+# 1. What is CRM ?
+
+## CRM (Customer Relationship Management) is a system used to manage customer information, communication, sales, and support in one place.
+# CRM helps businesses:
 Store customer data
 Track customer interactions
 Improve customer relationships
