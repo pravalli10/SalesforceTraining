@@ -1,9 +1,9 @@
-### DAY 3
+# DAY 3
 
 ## PART 1: INTERVIEW WARM-UP
 
 ## 1. What is a Validation Rule?
-# A Validation Rule is a Salesforce feature used to check whether the data entered in a record follows the required business conditions. If the condition evaluates to TRUE, Salesforce stops the record from being saved and shows an error message.
+### A Validation Rule is a Salesforce feature used to check whether the data entered in a record follows the required business conditions. If the condition evaluates to TRUE, Salesforce stops the record from being saved and shows an error message.
 # Example: Stop a student from applying if their CGPA is below the required CGPA.
 
 ## 2. What is a Flow?
