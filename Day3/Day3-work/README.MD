@@ -1,2 +1,190 @@
+### DAY 3
 
-## hi
+## PART 1: INTERVIEW WARM-UP
+
+## 1. What is a Validation Rule?
+# A Validation Rule is a Salesforce feature used to check whether the data entered in a record follows the required business conditions. If the condition evaluates to TRUE, Salesforce stops the record from being saved and shows an error message.
+# Example: Stop a student from applying if their CGPA is below the required CGPA.
+
+## 2. What is a Flow?
+# A Flow is a declarative automation tool in Salesforce that helps automate business processes without writing Apex code. It can create or update records, send emails, and perform different actions based on conditions.
+# Example: Automatically fill the Application Date when a new application is submitted.
+
+## 3. What is an Apex Trigger?
+# An Apex Trigger is Apex code that runs automatically when database operations such as insert, update, delete, or undelete occur. It is mainly used when the required business logic is difficult or complex to handle using Flow.
+# Example: Prevent duplicate applications or update related records automatically.
+
+## 4. When would you choose a Flow instead of a Trigger?
+# I would choose a Flow when the requirement can be handled using simple declarative automation without complex coding. Flows are easier to create, understand, and maintain.
+# Examples:
+•	Automatically update fields
+•	Send email notifications
+•	Create or update related records
+
+5. Can a Validation Rule update another field? Why or why not?
+No. A Validation Rule cannot update another field because it is only used to check whether the entered data is valid. It either allows the record to be saved or displays an error message. For automatic field updates, we can use a Flow or Apex Trigger.
+
+6. Which executes first: Validation Rule, Flow, or Trigger?
+The simplified execution order for creating or updating a record is:
+1.	Before-Save Record-Triggered Flow
+2.	Before Trigger
+3.	Validation Rule
+4.	Record is saved
+5.	After Trigger
+6.	After-Save Record-Triggered Flow
+
+7. What is a Record-Triggered Flow?
+A Record-Triggered Flow is a type of Flow that starts automatically when a record is created, updated, or deleted. It is useful for automating record-related processes without writing Apex code.
+Example: When a new Application record is created, automatically set the Application Date and send an email notification.
+
+Part 2 – Business Scenario
+
+Scenario:
+You are developing a Placement Management System. For each requirement, select the appropriate Salesforce automation tool—Validation Rule, Flow, or Apex Trigger—and explain the reason.
+
+1. Send an email to the Placement Officer when a student applies.
+Solution: Flow
+Reason: A Record-Triggered Flow can send an email notification automatically whenever a new Application record is created. Since this is a simple automation process, Apex code is not required.
+
+2. Automatically fill the Application Date when a student submits an application.
+Solution: Flow
+Reason: A Before-Save Record-Triggered Flow can set the Application Date to the current date when the application is submitted. This is an easy and efficient way to update the field automatically.
+
+3. Prevent duplicate applications for the same student and job.
+Solution: Apex Trigger
+Reason: An Apex Trigger can verify whether an Application already exists for the same student and job before creating a new record. If a duplicate is found, it can stop the record from being saved.
+
+4. Reject applications if the student's CGPA is below the minimum CGPA required for the job.
+Solution: Validation Rule
+Reason: A Validation Rule can compare the student's CGPA with the minimum CGPA required for the job. If the CGPA is too low, Salesforce prevents the application from being saved and displays an error message.
+
+5. Automatically create an Offer Letter when the Application Status changes to Selected.
+Solution: Flow
+Reason: A Record-Triggered Flow can identify when the Application Status changes to Selected and automatically create the related Offer Letter record. This can be done easily without writing Apex code.
+
+Summary
+Requirement	Solution	Reason
+Send email notification	Flow	Sends email automatically without code
+Auto-fill Application Date	Flow	Updates the date field before saving
+Prevent duplicate applications	Apex Trigger	Checks and prevents duplicate records
+Reject low CGPA applications	Validation Rule	Validates CGPA before saving
+Create Offer Letter	Flow	Creates a related record when status changes
+
+Part 3 – Design Challenge
+
+Question: Choose the appropriate Validation Rule, Flow, or Apex Trigger for each requirement and explain the reason.
+
+Requirement	Solution	Reason
+Automatically set the Application Date when a new application is created.	Flow	A Before-Save Record-Triggered Flow can automatically set the Application Date before the record is saved.
+Prevent a student from applying if their CGPA is below the required minimum.	Validation Rule	A Validation Rule verifies the student's CGPA and prevents the record from being saved if the minimum requirement is not satisfied.
+Prevent duplicate applications for the same student and job.	Apex Trigger	An Apex Trigger can check existing records and prevent duplicate applications by using addError().
+Send an email to the Placement Officer after a student submits an application.	Flow	An After-Save Record-Triggered Flow can automatically send an email notification after the Application record is created.
+Automatically create an Offer Letter when the application status changes to Selected.	Flow	A Record-Triggered Flow can identify when the status changes to Selected and automatically create the related Offer Letter record.
+Update multiple related records with complex business logic.	Apex Trigger	An Apex Trigger is suitable for complex logic involving multiple related records because it provides more control and supports bulk processing.
+
+
+Part 4 – Hands-on Task Explanation
+
+Objective :
+Create Record-Triggered Flows for the Placement Management System to:
+•	Automatically set the Application Date.
+•	Send an email notification to the Placement Officer.
+•	Verify that the automation runs successfully.
+
+1. Auto-Fill Application Date
+Type: Before-Save Record-Triggered Flow
+Object: Application
+Trigger: When a record is created
+Assignment: Application_Date__c = $Flow.CurrentDate
+Explanation: Whenever a student creates a new application, the flow automatically fills the Application Date with the current date before the record is saved.
+
+2. Email Notification
+Type: After-Save Record-Triggered Flow
+Object: Application
+Trigger: When a record is created
+Action: Send Email
+Explanation: After a student submits an application, the flow automatically sends an email notification to the Placement Officer.
+Result: Both flows were created to automate the application process and reduce manual work.
+
+Part 5 – Hands-on Task: Validation Rules
+
+Objective :
+Create Validation Rules on the Application object to prevent invalid application records from being saved and maintain accurate data.
+
+Validation Rule 1 – CGPA Check
+Rule Name: CGPA_Check
+Purpose: Prevent a student from applying when their CGPA is lower than the minimum CGPA required for the selected job.
+Formula: Student__r.CGPA__c < Job__r.Minimum_CGPA__c
+Result: The application cannot be saved if the student's CGPA does not meet the job requirement.
+
+Validation Rule 2 – Closing Date Check
+Rule Name: Closing_Date_Check
+Purpose: Prevent students from submitting applications after the job's closing date.
+Formula: Application_Date__c > Job__r.Closing_Date__c
+Result: Applications submitted after the closing date are not accepted.
+
+Validation Rule 3 – Mandatory Fields
+Rule Name: Mandatory_Fields
+Purpose: Make sure that both Student and Job fields are selected before an application is saved.
+Formula:
+OR(
+    ISBLANK(Student__c),
+    ISBLANK(Job__c)
+)
+Result: The application cannot be saved when the Student or Job field is empty.
+
+Part 7 – Mini Project Enhancement
+
+Objective :
+Improve the Placement Management System using Record-Triggered Flows and Validation Rules. These automations help reduce manual work and maintain accurate application data.
+
+1. Auto-Fill Application Date
+Implementation:
+•	Created a Before-Save Record-Triggered Flow on the Application object.
+•	Configured the flow to run whenever a new application is created.
+•	Set the Application Date automatically to the current date.
+Result: The Application Date is automatically populated, reducing manual data entry.
+
+2. Email Notification
+Implementation:
+•	Created an After-Save Record-Triggered Flow on the Application object.
+•	Configured the flow to send an email when a new application is submitted.
+Result: The Placement Officer receives an automatic email notification whenever a student submits an application.
+
+3. Validation Rules
+The following Validation Rules were implemented:
+•	CGPA Validation: Prevents students from applying when their CGPA is below the minimum CGPA required for the job.
+•	Closing Date Validation: Stops students from applying after the job's closing date.
+•	Mandatory Fields Validation: Ensures that Student and Job fields are filled before saving.
+Result: Invalid application records are prevented from being saved, which improves data quality in Salesforce.
+
+4. Automatic Offer Letter Creation
+Implementation:
+•	Created a Record-Triggered Flow on the Application object.
+•	Configured the flow to execute when the Application Status changes to Selected.
+•	Added a Create Records element to automatically create an Offer Letter record.
+Result: The flow was created and activated successfully. However, during testing, the Offer Letter record was not created. Therefore, further debugging is required to identify and fix the issue.
+
+Part 8 – Debugging Challenge
+
+Scenario
+During the testing of the Placement Management System, some automation did not work as expected. The goal was to identify the problem, check possible causes, and use debugging methods to find the solution.
+
+Challenge 1 – Offer Letter Flow Not Creating Records
+Problem: The Offer Letter record was not automatically created when the Application Status was changed to Selected.
+Possible Causes:
+•	The Flow entry conditions may be incorrect.
+•	Mandatory fields in the Offer Letter object may not be populated.
+•	Field mappings in the Create Records element may be incorrect.
+•	The Application record may not satisfy the Flow entry conditions.
+•	The latest version of the Flow may not be activated.
+Debugging Steps:
+1.	Open the Flow in Flow Builder and verify the entry conditions.
+2.	Check whether the Status value exactly matches Selected.
+3.	Verify all field mappings in the Create Records element.
+4.	Check whether all required Offer Letter fields are populated.
+5.	Use the Debug option in Flow Builder to test the Flow.
+6.	Save and activate the latest version after making corrections.
+Expected Result:
+When an Application Status changes to Selected, the system should automatically create the related Offer Letter record.
+
