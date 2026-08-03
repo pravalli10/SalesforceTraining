@@ -1,17 +1,17 @@
 # Placement Management System
 
-## Technologies
+## Technologies Used
 - Salesforce Apex
-- SOQL
-- DML
+- SOQL (Salesforce Object Query Language)
+- DML (Data Manipulation Language)
 
-## Features
-- Retrieve Student and Job records
-- Prevent duplicate applications
-- Validate CGPA, Branch, Backlogs, and Closing Date
-- Create Application records
-- Update Application Status
+## Key Features
+- Retrieve Student and Job details using SOQL
+- Detect and prevent duplicate applications
+- Validate eligibility based on CGPA, Branch, Backlogs, and Application Closing Date
+- Create new Application records
+- Modify Application Status after processing
 
-## Testing
-- Apex Test Class
-- Code Coverage: 94%
+## Testing & Validation
+- Developed Apex Test Class
+- Achieved 94% Code Coverage
